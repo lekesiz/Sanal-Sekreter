@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # PostgreSQL with pgvector extension
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: sanal-sekreter-postgres
+    environment:
+      POSTGRES_DB: sanal_sekreter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sanal-sekreter-network
+
+  # Redis for caching and queues
+  redis:
+    image: redis:7-alpine
+    container_name: sanal-sekreter-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sanal-sekreter-network
+
+  # Application (optional - for production)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sanal-sekreter-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/sanal_sekreter
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - ./logs:/app/logs
+      - ./recordings:/app/recordings
+      - ./.env:/app/.env
+      - ./service-account.json:/app/service-account.json
+    restart: unless-stopped
+    networks:
+      - sanal-sekreter-network
+
+  # pgAdmin (optional - for database management)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sanal-sekreter-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@netz.fr
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - sanal-sekreter-network
+    profiles:
+      - dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  pgadmin_data:
+
+networks:
+  sanal-sekreter-network:
+    driver: bridge
