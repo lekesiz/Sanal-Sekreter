@@ -234,8 +234,8 @@ curl http://localhost:4040/api/tunnels
 ## 🆘 Destek
 
 Sorun yaşıyorsanız:
-1. GitHub Issues: https://github.com/netz-informatique/sanal-sekreter/issues
-2. Email: contact@netz-informatique.fr
+1. GitHub Issues: https://github.com/lekesiz/Sanal-Sekreter/issues
+2. Email: contact@netzinformatique.fr
 
 ---
 

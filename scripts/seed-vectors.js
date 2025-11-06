@@ -41,7 +41,7 @@ const sampleDocuments = [
   },
   {
     title: 'Location and Contact',
-    content: 'Address: Paris, France. Phone: +33 1 23 45 67 89. Email: contact@netz-informatique.fr. We offer on-site service in Paris and surrounding areas.',
+    content: 'Address: Paris, France. Phone: +33 1 23 45 67 89. Email: contact@netzinformatique.fr. We offer on-site service in Paris and surrounding areas.',
     category: 'Contact',
     tags: ['address', 'location', 'contact'],
   },

@@ -358,8 +358,8 @@ MIT License - Proje açık kaynak değildir, yalnızca NETZ Informatique için g
 
 ## 📞 İletişim
 
-**Email**: contact@netz-informatique.fr
-**Website**: https://netzinformatique.vercel.app
+**Email**: contact@netzinformatique.fr
+**Website**: https://netzinformatique.fr
 **GitHub**: https://github.com/lekesiz/netzinformatique
 
 ---

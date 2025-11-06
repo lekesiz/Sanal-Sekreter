@@ -310,8 +310,8 @@ MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 ## 👥 İletişim
 
 **NETZ Informatique**
-- Website: https://netzinformatique.vercel.app
-- Email: contact@netz-informatique.fr
+- Website: https://netzinformatique.fr
+- Email: contact@netzinformatique.fr
 - GitHub: https://github.com/lekesiz/netzinformatique
 
 ---

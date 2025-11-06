@@ -319,4 +319,4 @@ const data = await response.json();
 
 ---
 
-For more information, contact: contact@netz-informatique.fr
+For more information, contact: contact@netzinformatique.fr
